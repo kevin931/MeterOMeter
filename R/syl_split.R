@@ -246,7 +246,6 @@ syl_split<-function(word) {
 
       }
 
-
     }
 
     character.string<-unlist(strsplit(character.string, "NA"))
@@ -509,6 +508,31 @@ syl_split<-function(word) {
       split.word<-split.word[-which(is.na(split.word))]
     }
 
+    if (any(split.word=="ia")) {
+
+      ia.index<-which(split.word=="ia")
+
+      split.word<-append(split.word, c("i", "a"), ia.index)
+
+      split.word<-split.word[-ia.index]
+
+    }
+
+    if (any(grepl("[^tc]ia$", split.word))) {
+
+      ia.index<-which(grepl("[^tc]ia$", split.word))
+
+      if (length(ia.index==1))
+
+      syllables<-unlist(strsplit(split.word[ia.index], split=""))
+
+      syllables<-syllables[1:(length(syllables)-1)]
+
+      split.word<-append(split.word, c(paste(split.word,collapse = ""), "a"), ia.index)
+
+      split.word<-split.word[-ia.index]
+
+    }
 
     return(split.word)
 
