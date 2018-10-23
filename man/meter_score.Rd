@@ -1,7 +1,7 @@
 \name{meter_score}
 \alias{meter_score}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
+\title{meter_score
 %%  ~~function to do ... ~~
 }
 \description{
