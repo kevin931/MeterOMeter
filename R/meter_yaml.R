@@ -21,6 +21,8 @@ meter_yaml<-function(file) {
     }
   }
 
+  rm(temp, a)
+
   word <- vector()
 
   pronunciation.1<-vector()
