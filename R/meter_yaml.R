@@ -204,22 +204,76 @@ meter_yaml<-function(file) {
 
   rm(i, sub_list, words, pronunciations, scores, sources)
 
+  if (any(pronunciation.1=="0̩")) {
+
+    pronunciation.1[which(pronunciation.1=="0̩")] <-"0"
+
+  }
+
+  if (any(pronunciation.1=="1̩")) {
+
+    pronunciation.1[which(pronunciation.1=="1̩")]<-"1"
+  }
+
+  if (!is.na(any(pronunciation.2=="0̩"))) {
+
+    pronunciation.2[which(pronunciation.2=="0̩")] <-"0"
+
+  }
+
+  if (!is.na(any(pronunciation.2=="1̩"))) {
+
+    pronunciation.2[which(pronunciation.2=="1̩")]<-"1"
+  }
+
+  if (!is.na(any(pronunciation.3=="0̩"))) {
+
+    pronunciation.3[which(pronunciation.3=="0̩")] <-"0"
+
+  }
+
+  if (!is.na(any(pronunciation.3=="1̩"))) {
+
+    pronunciation.3[which(pronunciation.3=="1̩")]<-"1"
+  }
+
+  if (!is.na(any(pronunciation.4=="0̩"))) {
+
+    pronunciation.4[which(pronunciation.4=="0̩")] <-"0"
+
+  }
+
+  if (!is.na(any(pronunciation.1=="1̩"))) {
+
+    pronunciation.4[which(pronunciation.4=="1̩")]<-"1"
+  }
+
+  syllables.1<-nchar(pronunciation.1)
+
+  syllables.2<-nchar(pronunciation.2)
+
+  syllables.3<-nchar(pronunciation.3)
+
+  syllables.4<-nchar(pronunciation.4)
+
   data<-data.frame(word,
                    pronunciation.1,
+                   syllables.1,
                    source.1,
                    score.1,
                    pronunciation.2,
+                   syllables.2,
                    source.2,
                    score.2,
                    pronunciation.3,
+                   syllables.3,
                    source.3,
                    score.3,
                    pronunciation.4,
+                   syllables.4,
                    source.4,
                    score.4)
 
-
   return(data)
-
 
 }
