@@ -246,6 +246,8 @@ meter_score<-function(x,
 
     metrical_score<-sum(index)/length(index)
 
+    metrical_structure<-index
+
 
 
   } else {
@@ -280,11 +282,14 @@ meter_score<-function(x,
     }
 
     metrical_score<-sum(index)/length(index)
+
+    metrical_structure<-index
   }
 
+  output<-list(metrical_score=metrical_score, metrical_structure=metrical_structure)
 
+  class(output)<-c("meter_output", "list")
 
-
-  return(metrical_score)
+  return(output)
 
 }
