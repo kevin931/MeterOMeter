@@ -8,450 +8,408 @@
 #########
 
 
-syl_split<-function(word) {
+syl_split<-function(input) {
 
   require(tm)
 
-  if (word=="a.m." | word=="a.m") {
+  input<-unlist(strsplit(input, split = " "))
 
-    return(c("a", "m"))
-  }
+  input<-tolower(input)
 
-  if (grepl("ment$", word)){
+  output<-list()
 
-    word<-unlist(strsplit(word, ""))
+  for (word_num in 1:length(input)) {
 
-    word<-word[1:(length(word)-4)]
+    word<-input[word_num]
 
-    word<-paste0(word, collapse="")
+    if (word=="a.m." | word=="a.m") {
 
-    word.1<-"me"
+      output[[word_num]]<-c("a", "m")
+    }
 
-  } else if(grepl("less$", word)) {
+    if (grepl("ment$", word)){
 
-    word<-unlist(strsplit(word, ""))
+      word<-unlist(strsplit(word, ""))
 
-    word<-word[1:(length(word)-4)]
+      word<-word[1:(length(word)-4)]
 
-    word<-paste0(word, collapse="")
+      word<-paste0(word, collapse="")
 
-    word.1<-"le"
+      word.1<-"me"
 
-  } else if (grepl("lessness$", word)) {
+    } else if(grepl("less$", word)) {
 
-    word<-unlist(strsplit(word, ""))
+      word<-unlist(strsplit(word, ""))
 
-    word<-word[1:(length(word)-8)]
+      word<-word[1:(length(word)-4)]
 
-    word<-paste0(word, collapse="")
+      word<-paste0(word, collapse="")
 
-    word.1<-c("le", "ne")
+      word.1<-"le"
 
-  } else if (grepl("fulness$", word)) {
+    } else if (grepl("lessness$", word)) {
 
-    word<-unlist(strsplit(word, ""))
+      word<-unlist(strsplit(word, ""))
 
-    word<-word[1:(length(word)-8)]
+      word<-word[1:(length(word)-8)]
 
-    word<-paste0(word, collapse="")
+      word<-paste0(word, collapse="")
 
-    word.1<-c("fu", "ne")
+      word.1<-c("le", "ne")
 
-  } else if (grepl("ful$", word)) {
+    } else if (grepl("fulness$", word)) {
 
-    word<-unlist(strsplit(word, ""))
+      word<-unlist(strsplit(word, ""))
 
-    word<-word[1:(length(word)-3)]
+      word<-word[1:(length(word)-8)]
 
-    word<-paste0(word, collapse="")
+      word<-paste0(word, collapse="")
 
-    word.1<-c("fu")
+      word.1<-c("fu", "ne")
 
-  } else if (grepl("ology$", word)) {
+    } else if (grepl("ful$", word)) {
 
-    word<-unlist(strsplit(word, ""))
+      word<-unlist(strsplit(word, ""))
 
-    word<-word[1:(length(word)-5)]
+      word<-word[1:(length(word)-3)]
 
-    word<-paste0(word, collapse="")
+      word<-paste0(word, collapse="")
 
-    word.1<-c("o", "lo", "gy")
+      word.1<-c("fu")
 
-  } else {
+    } else if (grepl("ology$", word)) {
 
-    word.1<-NA
-  }
+      word<-unlist(strsplit(word, ""))
 
-  vowels<-"[aeiouy]"
+      word<-word[1:(length(word)-5)]
 
-  word<-removePunctuation(word)
+      word<-paste0(word, collapse="")
 
-  character.string<-strsplit(word, "")
-
-  character.string<-unlist(character.string)
-
-  character.string.reserve<-character.string
-
-  vowel.pos<-grep(vowels,character.string, perl=T)
-
-  cons.pos<-grep("[^aeiouy]", character.string, perl=T)
-
-
-
-  if (length(character.string)==1) {
-
-    return(character.string)
-
-  } else if (length(vowel.pos)==0) {
-
-    if (word=="st" | word=="pm") {
-
-      return(word)
+      word.1<-c("o", "lo", "gy")
 
     } else {
 
-      return(character.string)
-
-    }
-  } else if (length(cons.pos)==0 & !any(grepl("[y]", character.string))) {
-
-    if (length(character.string)==2 | length(character.string)==3 ) {
-
-      return(word)
-
-    } else {
-
-      return(character.string)
-
+      word.1<-NA
     }
 
-  } else {
+    vowels<-"[aeiouy]"
 
-    character.string.sub<-vector()
+    word<-removePunctuation(word)
 
-    if (length(vowel.pos) >1) {
+    character.string<-strsplit(word, "")
 
-      for (i in 1:(length(vowel.pos)-1)) {
+    character.string<-unlist(character.string)
 
-        if ((vowel.pos[i+1]-vowel.pos[i])==1) {
+    character.string.reserve<-character.string
 
-          character.string.sub[i]<-paste(character.string[vowel.pos[i]],
-                                         character.string[vowel.pos[i+1]],
-                                         sep="")
+    vowel.pos<-grep(vowels,character.string, perl=T)
 
-        } else {
+    cons.pos<-grep("[^aeiouy]", character.string, perl=T)
 
-          character.string.sub[i]<-NA
-        }
+
+
+    if (length(character.string)==1) {
+
+      output[[word_num]]<-character.string
+
+    } else if (length(vowel.pos)==0) {
+
+      if (word=="st" | word=="pm") {
+
+        output[[word_num]]<-word
+
+      } else {
+
+        output[[word_num]]<-character.string
+
+      }
+    } else if (length(cons.pos)==0 & !any(grepl("[y]", character.string))) {
+
+      if (length(character.string)==2 | length(character.string)==3 ) {
+
+        output[[word_num]]<-word
+
+      } else {
+
+        output[[word_num]]<-character.string
+
       }
 
-      character.string.new<-vector()
+    } else {
 
-      if (any(!is.na(character.string.sub))) {
+      character.string.sub<-vector()
 
-        j<-1
+      if (length(vowel.pos) >1) {
 
-        while (j <=  length(character.string.sub)) {
+        for (i in 1:(length(vowel.pos)-1)) {
 
-          if (!is.na(character.string.sub[j])) {
+          if ((vowel.pos[i+1]-vowel.pos[i])==1) {
 
-            character.string.new[j]<-paste(character.string[vowel.pos[j]],
-                                           character.string[vowel.pos[j+1]],
+            character.string.sub[i]<-paste(character.string[vowel.pos[i]],
+                                           character.string[vowel.pos[i+1]],
                                            sep="")
-            j<-j+2
 
           } else {
 
-            character.string.new[j]<-character.string[vowel.pos[j]]
-
-            j<-j+1
-
+            character.string.sub[i]<-NA
           }
         }
-        character.string.new[j]<-character.string[vowel.pos[j]]
 
-        for (k in 1:length(vowel.pos)) {
+        character.string.new<-vector()
 
-          character.string[vowel.pos[k]]<-character.string.new[k]
+        if (any(!is.na(character.string.sub))) {
 
+          j<-1
+
+          while (j <=  length(character.string.sub)) {
+
+            if (!is.na(character.string.sub[j])) {
+
+              character.string.new[j]<-paste(character.string[vowel.pos[j]],
+                                             character.string[vowel.pos[j+1]],
+                                             sep="")
+              j<-j+2
+
+            } else {
+
+              character.string.new[j]<-character.string[vowel.pos[j]]
+
+              j<-j+1
+
+            }
+          }
+          character.string.new[j]<-character.string[vowel.pos[j]]
+
+          for (k in 1:length(vowel.pos)) {
+
+            character.string[vowel.pos[k]]<-character.string.new[k]
+
+          }
+
+          character.string<-character.string[-which(is.na(character.string))]
         }
 
-        character.string<-character.string[-which(is.na(character.string))]
-      }
+        rm(character.string.new, character.string.sub)
 
-      rm(character.string.new, character.string.sub)
+        vowel.pos<-grep(vowels,character.string, perl=T)
 
-      vowel.pos<-grep(vowels,character.string, perl=T)
+        if (any(diff(vowel.pos)==1)) {
 
-      if (any(diff(vowel.pos)==1)) {
+          time.1<-length(which(diff(vowel.pos)==1))
 
-        time.1<-length(which(diff(vowel.pos)==1))
+          for (rep.1 in 1:time.1) {
 
-        for (rep.1 in 1:time.1) {
+            character.string.sub<-vector()
 
-          character.string.sub<-vector()
+            if (length(vowel.pos) >1) {
 
-          if (length(vowel.pos) >1) {
+              for (i in 1:(length(vowel.pos)-1)) {
 
-            for (i in 1:(length(vowel.pos)-1)) {
+                if ((vowel.pos[i+1]-vowel.pos[i])==1) {
 
-              if ((vowel.pos[i+1]-vowel.pos[i])==1) {
-
-                character.string.sub[i]<-paste(character.string[vowel.pos[i]],
-                                               character.string[vowel.pos[i+1]],
-                                               sep="")
-
-              } else {
-
-                character.string.sub[i]<-NA
-              }
-            }
-
-            character.string.new<-vector()
-
-            if (any(!is.na(character.string.sub))) {
-
-              j<-1
-
-              while (j <=  length(character.string.sub)) {
-
-                if (!is.na(character.string.sub[j])) {
-
-                  character.string.new[j]<-paste(character.string[vowel.pos[j]],
-                                                 character.string[vowel.pos[j+1]],
+                  character.string.sub[i]<-paste(character.string[vowel.pos[i]],
+                                                 character.string[vowel.pos[i+1]],
                                                  sep="")
-                  j<-j+2
 
                 } else {
 
-                  character.string.new[j]<-character.string[vowel.pos[j]]
-
-                  j<-j+1
-
+                  character.string.sub[i]<-NA
                 }
               }
-              character.string.new[j]<-character.string[vowel.pos[j]]
 
-              for (k in 1:length(vowel.pos)) {
+              character.string.new<-vector()
 
-                character.string[vowel.pos[k]]<-character.string.new[k]
+              if (any(!is.na(character.string.sub))) {
 
+                j<-1
+
+                while (j <=  length(character.string.sub)) {
+
+                  if (!is.na(character.string.sub[j])) {
+
+                    character.string.new[j]<-paste(character.string[vowel.pos[j]],
+                                                   character.string[vowel.pos[j+1]],
+                                                   sep="")
+                    j<-j+2
+
+                  } else {
+
+                    character.string.new[j]<-character.string[vowel.pos[j]]
+
+                    j<-j+1
+
+                  }
+                }
+                character.string.new[j]<-character.string[vowel.pos[j]]
+
+                for (k in 1:length(vowel.pos)) {
+
+                  character.string[vowel.pos[k]]<-character.string.new[k]
+
+                }
+
+                character.string<-character.string[-which(is.na(character.string))]
               }
-
-              character.string<-character.string[-which(is.na(character.string))]
             }
+          }
+
+
+        }
+
+      }
+
+      character.string<-unlist(strsplit(character.string, "NA"))
+
+      if (any(character.string=="")) {
+
+        character.string<-character.string[-which(character.string=="")]
+
+      }
+
+      vowel.pos<-grep(vowels,character.string, perl=T)
+
+      character.string.new<-vector()
+
+      character.string.sub<-vector()
+
+      if (length(vowel.pos)>1) {
+
+        for (k.1 in 2:length(vowel.pos)) {
+
+          if ((vowel.pos[k.1]-vowel.pos[k.1-1])==3 &
+              (character.string[vowel.pos[k.1-1]+1]==character.string[vowel.pos[k.1]-1])) {
+
+            character.string.new[k.1-1]<-"Yes"
+
+          } else {
+
+            character.string.new[k.1-1]<-NA
+          }
+
+        }
+
+        if (any(!is.na(character.string.new))) {
+
+          index.1<-which(character.string.new=="Yes")
+
+          for (k.2 in index.1) {
+
+            character.string.new[index.1]<- paste(character.string[vowel.pos[k.2]+1],
+                                                  character.string[vowel.pos[k.2]+1],
+                                                  sep="")
+
+          }
+
+          for (k.3 in index.1) {
+
+            character.string[vowel.pos[k.3]+1]<-character.string.new[k.3]
+
+            character.string[vowel.pos[k.3]+2]<-NA
+          }
+
+          character.string<-character.string[-which(is.na(character.string))]
+        }
+      }
+
+      vowel.pos<-grep(vowels,character.string, perl=T)
+
+      split.word<- vector()
+
+      if (any(nchar(character.string)>1)) {
+
+        multi.index<-which(nchar(character.string)>1)
+
+        names(character.string)<-c(1:length(character.string))
+
+        for (k.4 in 1:length(vowel.pos)) {
+
+          if (vowel.pos[k.4]==1) {
+
+            split.word[k.4]<- paste0(character.string[vowel.pos[k.4]])
+
+            character.string[vowel.pos[k.4]]<-NA
+
+          } else {
+
+            split.word[k.4]<- paste0(character.string[vowel.pos[k.4]-1],
+                                     character.string[vowel.pos[k.4]])
+
+            character.string[vowel.pos[k.4]-1]<-NA
+            character.string[vowel.pos[k.4]]<-NA
           }
         }
 
+        names(split.word)<-c(vowel.pos)
 
-      }
-
-    }
-
-    character.string<-unlist(strsplit(character.string, "NA"))
-
-    if (any(character.string=="")) {
-
-      character.string<-character.string[-which(character.string=="")]
-
-    }
-
-    vowel.pos<-grep(vowels,character.string, perl=T)
-
-    character.string.new<-vector()
-
-    character.string.sub<-vector()
-
-    if (length(vowel.pos)>1) {
-
-      for (k.1 in 2:length(vowel.pos)) {
-
-        if ((vowel.pos[k.1]-vowel.pos[k.1-1])==3 &
-            (character.string[vowel.pos[k.1-1]+1]==character.string[vowel.pos[k.1]-1])) {
-
-          character.string.new[k.1-1]<-"Yes"
-
-        } else {
-
-          character.string.new[k.1-1]<-NA
-        }
-
-      }
-
-      if (any(!is.na(character.string.new))) {
-
-        index.1<-which(character.string.new=="Yes")
-
-        for (k.2 in index.1) {
-
-          character.string.new[index.1]<- paste(character.string[vowel.pos[k.2]+1],
-                                                character.string[vowel.pos[k.2]+1],
-                                                sep="")
-
-        }
-
-        for (k.3 in index.1) {
-
-          character.string[vowel.pos[k.3]+1]<-character.string.new[k.3]
-
-          character.string[vowel.pos[k.3]+2]<-NA
-        }
-
-        character.string<-character.string[-which(is.na(character.string))]
-      }
-    }
-
-    vowel.pos<-grep(vowels,character.string, perl=T)
-
-    split.word<- vector()
-
-    if (any(nchar(character.string)>1)) {
-
-      multi.index<-which(nchar(character.string)>1)
-
-      names(character.string)<-c(1:length(character.string))
-
-      for (k.4 in 1:length(vowel.pos)) {
-
-        if (vowel.pos[k.4]==1) {
-
-          split.word[k.4]<- paste0(character.string[vowel.pos[k.4]])
-
-          character.string[vowel.pos[k.4]]<-NA
-
-        } else {
-
-          split.word[k.4]<- paste0(character.string[vowel.pos[k.4]-1],
-                                   character.string[vowel.pos[k.4]])
-
-          character.string[vowel.pos[k.4]-1]<-NA
-          character.string[vowel.pos[k.4]]<-NA
-        }
-      }
-
-      names(split.word)<-c(vowel.pos)
-
-      split.word<-append(split.word, character.string[multi.index])
-
-    } else {
-
-      for (k.4 in 1:length(vowel.pos)) {
-
-        if (vowel.pos[k.4]==1) {
-
-          split.word[k.4]<- paste0(character.string[vowel.pos[k.4]])
-
-        } else {
-
-          split.word[k.4]<- paste0(character.string[vowel.pos[k.4]-1],
-                                   character.string[vowel.pos[k.4]])
-        }
-      }
-    }
-
-    names(split.word)<-NULL
-
-    if (any(is.na(split.word))) {
-
-      split.word<-split.word[-which(is.na(split.word))]
-    }
-
-    if (grepl("e$", word)) {
-
-      if (length(split.word)==1) {
-
-        split.word<-split.word
-
-      } else if (grepl("[^aeiouyr][aeiou]e$", word)) {
-
-        split.word<-split.word
-
-      } else if (grepl("[^aeiouyr]le$", word)) {
-
-        split.word<-split.word
+        split.word<-append(split.word, character.string[multi.index])
 
       } else {
 
-        split.word[length(split.word)]<-NA
-      }
-    }
+        for (k.4 in 1:length(vowel.pos)) {
 
-    if (grepl("es$", word)) {
+          if (vowel.pos[k.4]==1) {
 
-      if (length(split.word)==1) {
+            split.word[k.4]<- paste0(character.string[vowel.pos[k.4]])
 
-        split.word<-split.word
+          } else {
 
-      } else if (grepl("[^aeiouyr][aeiou]e$", word)) {
-
-        split.word<-split.word
-
-      } else if(grepl("ges$|les$", word)) {
-
-        split.word<-split.word
-
-      } else {
-
-        split.word[length(split.word)]<-NA
+            split.word[k.4]<- paste0(character.string[vowel.pos[k.4]-1],
+                                     character.string[vowel.pos[k.4]])
+          }
+        }
       }
 
-    }
+      names(split.word)<-NULL
 
-    if(grepl("[ae]nce$", word)) {
+      if (any(is.na(split.word))) {
 
-      split.word[length(split.word)]<-NA
+        split.word<-split.word[-which(is.na(split.word))]
+      }
 
-    }
+      if (grepl("e$", word)) {
 
-    if (any(is.na(split.word))) {
+        if (length(split.word)==1) {
 
-      split.word<-split.word[-which(is.na(split.word))]
-    }
+          split.word<-split.word
 
-    if (grepl("dnt$", word)) {
+        } else if (grepl("[^aeiouyr][aeiou]e$", word)) {
 
-      split.word<-append(split.word, "nt")
+          split.word<-split.word
 
-    }
+        } else if (grepl("[^aeiouyr]le$", word)) {
 
-    if (any(grepl("y[aeiou]$|y[aeiou][aeiou]$|y[aeiou][aeiou][aeiou]$|y[aeiou][aeiou][aeiou][aeiou]$|y[aeiou][aeiou][aeiou][aeiou][aeiou]",
-                  split.word))
-
-    ) {
-
-      y.index<-which(grepl("y[aeiou]$|y[aeiou][aeiou]$|y[aeiou][aeiou][aeiou]$|y[aeiou][aeiou][aeiou][aeiou]$|y[aeiou][aeiou][aeiou][aeiou][aeiou]",
-                           split.word))
-
-      y.split<-strsplit(split.word[y.index], "")
-
-      for (y.split.index in 1:length(y.split)) {
-
-        y.placement<-which(y.split[[y.split.index]]=="y")
-
-        if (length(y.placement)==1) {
-
-
-          y.split[[y.split.index]]<-c(paste0(y.split[[y.split.index]][1:(y.placement-1)],
-                                             collapse = ""),
-                                      paste0(y.split[[y.split.index]][y.placement:(length(y.split[[y.split.index]]))],
-                                             collapse= ""))
+          split.word<-split.word
 
         } else {
 
-          y.split[[y.split.index]]<-c(paste(y.split[[y.split.index]][1:(y.placement[length(y.placement)]-1)],
-                                            collapse = ""),
-                                      paste(y.split[[y.split.index]][y.placement[length(y.placement)]:length(y.split[[y.split.index]])],
-                                            collapse = ""))
+          split.word[length(split.word)]<-NA
+        }
+      }
 
+      if (grepl("es$", word)) {
+
+        if (length(split.word)==1) {
+
+          split.word<-split.word
+
+        } else if (grepl("[^aeiouyr][aeiou]e$", word)) {
+
+          split.word<-split.word
+
+        } else if(grepl("ges$|les$", word)) {
+
+          split.word<-split.word
+
+        } else {
+
+          split.word[length(split.word)]<-NA
         }
 
+      }
 
+      if(grepl("[ae]nce$", word)) {
 
-        split.word<-append(split.word,
-                           y.split[[y.split.index]],
-                           after = (y.index[y.split.index])+2*y.split.index-2)
-
-        split.word[(y.index[y.split.index])+2*y.split.index-2]<-NA
+        split.word[length(split.word)]<-NA
 
       }
 
@@ -460,83 +418,142 @@ syl_split<-function(word) {
         split.word<-split.word[-which(is.na(split.word))]
       }
 
-    }
+      if (grepl("dnt$", word)) {
 
-    if (length(split.word)>1) {
-
-      if (split.word[length(split.word)]=="ye" &
-          grepl("[aeiou]$", split.word[length(split.word)-1])) {
-
-        split.word[length(split.word)-1] <- paste0(split.word[length(split.word)-1],
-                                                   split.word[length(split.word)])
-
-        split.word<-split.word[1:(length(split.word)-1)]
+        split.word<-append(split.word, "nt")
 
       }
-    }
+
+      if (any(grepl("y[aeiou]$|y[aeiou][aeiou]$|y[aeiou][aeiou][aeiou]$|y[aeiou][aeiou][aeiou][aeiou]$|y[aeiou][aeiou][aeiou][aeiou][aeiou]",
+                    split.word))
+
+      ) {
+
+        y.index<-which(grepl("y[aeiou]$|y[aeiou][aeiou]$|y[aeiou][aeiou][aeiou]$|y[aeiou][aeiou][aeiou][aeiou]$|y[aeiou][aeiou][aeiou][aeiou][aeiou]",
+                             split.word))
+
+        y.split<-strsplit(split.word[y.index], "")
+
+        for (y.split.index in 1:length(y.split)) {
+
+          y.placement<-which(y.split[[y.split.index]]=="y")
+
+          if (length(y.placement)==1) {
 
 
-    if (!is.na(word.1)) {
+            y.split[[y.split.index]]<-c(paste0(y.split[[y.split.index]][1:(y.placement-1)],
+                                               collapse = ""),
+                                        paste0(y.split[[y.split.index]][y.placement:(length(y.split[[y.split.index]]))],
+                                               collapse= ""))
 
-      split.word<-append(split.word, word.1)
+          } else {
 
-    }
+            y.split[[y.split.index]]<-c(paste(y.split[[y.split.index]][1:(y.placement[length(y.placement)]-1)],
+                                              collapse = ""),
+                                        paste(y.split[[y.split.index]][y.placement[length(y.placement)]:length(y.split[[y.split.index]])],
+                                              collapse = ""))
 
-    if (is.na(word.1) & grepl("ed$", word)) {
+          }
 
-      if (length(split.word)==1) {
 
-        split.word<-split.word
 
-      } else if (grepl("[^aeiouyr][aeiou]ed$", word)) {
+          split.word<-append(split.word,
+                             y.split[[y.split.index]],
+                             after = (y.index[y.split.index])+2*y.split.index-2)
 
-        split.word<-split.word
+          split.word[(y.index[y.split.index])+2*y.split.index-2]<-NA
 
-      } else if (grepl("[tdl]ed$", word)) {
+        }
 
-        split.word<-split.word
+        if (any(is.na(split.word))) {
 
-      } else {
+          split.word<-split.word[-which(is.na(split.word))]
+        }
 
-        split.word[length(split.word)]<-NA
       }
 
+      if (length(split.word)>1) {
+
+        if (split.word[length(split.word)]=="ye" &
+            grepl("[aeiou]$", split.word[length(split.word)-1])) {
+
+          split.word[length(split.word)-1] <- paste0(split.word[length(split.word)-1],
+                                                     split.word[length(split.word)])
+
+          split.word<-split.word[1:(length(split.word)-1)]
+
+        }
+      }
+
+
+      if (!is.na(word.1)) {
+
+        split.word<-append(split.word, word.1)
+
+      }
+
+      if (is.na(word.1) & grepl("ed$", word)) {
+
+        if (length(split.word)==1) {
+
+          split.word<-split.word
+
+        } else if (grepl("[^aeiouyr][aeiou]ed$", word)) {
+
+          split.word<-split.word
+
+        } else if (grepl("[tdl]ed$", word)) {
+
+          split.word<-split.word
+
+        } else {
+
+          split.word[length(split.word)]<-NA
+        }
+
+      }
+
+      if (any(is.na(split.word))) {
+
+        split.word<-split.word[-which(is.na(split.word))]
+      }
+
+      if (any(split.word=="ia")) {
+
+        ia.index<-which(split.word=="ia")
+
+        split.word<-append(split.word, c("i", "a"), ia.index)
+
+        split.word<-split.word[-ia.index]
+
+      }
+
+      if (any(grepl("[^tc]ia$", split.word))) {
+
+        ia.index<-which(grepl("[^tc]ia$", split.word))
+
+        if (length(ia.index==1))
+
+          syllables<-unlist(strsplit(split.word[ia.index], split=""))
+
+        syllables<-syllables[1:(length(syllables)-1)]
+
+        split.word<-append(split.word, c(paste(split.word,collapse = ""), "a"), ia.index)
+
+        split.word<-split.word[-ia.index]
+
+      }
+
+      output[[word_num]]<-split.word
+
+
     }
 
-    if (any(is.na(split.word))) {
-
-      split.word<-split.word[-which(is.na(split.word))]
-    }
-
-    if (any(split.word=="ia")) {
-
-      ia.index<-which(split.word=="ia")
-
-      split.word<-append(split.word, c("i", "a"), ia.index)
-
-      split.word<-split.word[-ia.index]
-
-    }
-
-    if (any(grepl("[^tc]ia$", split.word))) {
-
-      ia.index<-which(grepl("[^tc]ia$", split.word))
-
-      if (length(ia.index==1))
-
-      syllables<-unlist(strsplit(split.word[ia.index], split=""))
-
-      syllables<-syllables[1:(length(syllables)-1)]
-
-      split.word<-append(split.word, c(paste(split.word,collapse = ""), "a"), ia.index)
-
-      split.word<-split.word[-ia.index]
-
-    }
-
-    return(split.word)
 
 
   }
+
+  return(output)
+
 
 }
