@@ -549,11 +549,8 @@ syl_split<-function(input) {
 
     }
 
-
-
   }
 
   return(output)
-
 
 }
