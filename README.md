@@ -8,6 +8,14 @@ The Meter-O-Meter project is based on www.meter-o-meter.com and Tim Cassedy's id
 
 The MeterOMeter package provides only limited functions at this time. The meter_yaml function currently relies on a proprietary meter-o-meter YAML format that is not yet available to the general public, but all other functions serve as stand-alone functions for R.
 
+## Current Version:
+
+0.1.1
+
+## What's New?
+
+Please [click here](https://github.com/kevin931/MeterOMeter/blob/master/Versions.md)
+
 ## Current Status:
 
 This project is periodically maintained with new features planned.
@@ -16,9 +24,7 @@ This project is periodically maintained with new features planned.
 
 1. There currently is no documentation for this package whatsoever, and I will address this issue in the near future.
 
-2. The installation process does not install dependencies automatically. A list of dependencies will be shortly included here, and proper procedure will be taken to ensure successful installations.
-
-3. The num_to_speech function covers only a certain range of numbers at this time.
+2. The num_to_speech function covers only a certain range of numbers at this time.
 
 ## Collaboration:
 
