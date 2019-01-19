@@ -1,7 +1,7 @@
 Package: MeterOMeter
 Type: Package
 Title: Meter-O-Meter Package
-Version: 0.1.0
+Version: 0.1.1
 Author: Kevin Wang
 Maintainer: Kevin Wang <kevinwang@gmail.com>
 Description: The MeterOMeter Package uses basic NLP tools and statistical
