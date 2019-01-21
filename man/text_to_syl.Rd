@@ -40,11 +40,7 @@ text_to_syl(x,
 This function is dependent upon the syl_split function and for better performance, the parallel package is required. In the future, the type argument may no longer be required as it will be handled by the function itself.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A nested list with the syllables of the same word in their own lists
 }
 \references{
 
