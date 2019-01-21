@@ -1,25 +1,43 @@
 \name{text_to_syl}
 \alias{text_to_syl}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 
-text_to_syl
-%%  ~~function to do ... ~~
+Converting Words to Syllables
+
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+
+This function implements the function syl_split by providing support for vector or string input. It also has the option for multi-threading for better performance on a modern CPU.
 }
 \usage{
-text_to_syl(x)
+text_to_syl(x,
+            type=c("vector", "string"),
+            multi_core=F,
+            core_used=NA)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+    A vector or a single string containing one or more words.
 }
+  \item{type}{
+
+    "vector" for vector input and "string" input
+  }
+
+  \item{multi_core}{
+
+  a logical indicating whether to use multiple cores with parallel package
+  }
+
+  \item{core_used}{
+
+  a numeric vector that specifies how many cores to use if "multi_core" is TRUE.
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+
+This function is dependent upon the syl_split function and for better performance, the parallel package is required. In the future, the type argument may no longer be required as it will be handled by the function itself.
 }
 \value{
 %%  ~Describe the value returned
@@ -29,31 +47,29 @@ text_to_syl(x)
 %% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
+
 }
 \author{
-%%  ~~who you are~~
+Kevin Wang
 }
 \note{
-%%  ~~further notes~~
+Future support for Windows;
+May merge with syl_split in the future versions.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-function (x)
-{
-  }
+require(MeterOMeter)
+
+text_to_syllable(c("I", "am", "a", "developer"), "vector")
+
+text_to_syllable("I am a developer", "string")
+
+text_to_syllable("I am a developer", "string", T, 2)
+
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
