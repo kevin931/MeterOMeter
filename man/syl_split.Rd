@@ -1,59 +1,41 @@
 \name{syl_split}
 \alias{syl_split}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
 
-syl_split
-%%  ~~function to do ... ~~
+\title{
+Split Words into Syllables
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This function splits words into syllables by keeping only functional syllables, meaning that some of the vowels and consonents will be dropped. It is most useful when trying to count the number of syllables in words and dealing with words that are uncommon, misspelled, or even invented.
 }
 \usage{
-syl_split(x)
+syl_split(input)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{input}{
+  A string of words
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A list of syllables of each word in the string.
 }
 \references{
-%% ~put references to the literature/web site here ~
+
 }
 \author{
-%%  ~~who you are~~
+Kevin Wang
 }
 \note{
-%%  ~~further notes~~
+For words that are totally unusual and/or acronyms, this function may not work as expected.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x)
-{
-  }
+syl_split("The table in beside the chair.")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

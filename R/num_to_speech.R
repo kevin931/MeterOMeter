@@ -8,9 +8,7 @@
 
 ##################
 
-num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
-
-  len<-length(x)
+num.to.speech<- function(number, zero.digit=F, round.digit=3, zero.append=F) {
 
   single.digit<-c("zero", "one", "two", "three", "four",
                   "five", "six", "seven", "eight", "nine")
@@ -21,7 +19,10 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
   ty<-c("twenty", "thirty", "forty", "fifty", "sixty",
         "seventy", "eighty", "ninety")
 
-  if (len==1) {
+  output <- vector()
+
+  for (x in number) {
+
 
     if (!is.numeric(x)) {
 
@@ -124,11 +125,15 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
           if (zero.digit) {
 
-            return(paste0("zero point ", paste(x.1, collapse = " ")))
+            out<-paste0("zero point ", paste(x.1, collapse = " "))
+
+            output<-c(output, out)
 
           } else {
 
-            return(paste0("point ", paste(x.1, collapse = " ")))
+            out<-paste0("point ", paste(x.1, collapse = " "))
+
+            output<-c(output, out)
           }
 
         }
@@ -141,7 +146,9 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
     } else if (dig.len==1) {
 
-      return(single.digit[x+1])
+      out<-single.digit[x+1]
+
+      output<-c(output, out)
 
     } else if (dig.len==2) {
 
@@ -149,17 +156,23 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
       if (x.1[1]=="1") {
 
-        return(teen[as.numeric(x.1[2])+1])
+        out<-teen[as.numeric(x.1[2])+1]
+
+        output<-c(output, out)
 
       } else if (x.1[2]=="0") {
 
-        return(paste(ty[as.numeric(x.1[1])-1]))
+        out<-paste(ty[as.numeric(x.1[1])-1])
+
+        output<-c(output, out)
 
       } else {
 
         x.1<-unlist(strsplit(x.1, split=""))
 
-        return(paste(ty[as.numeric(x.1[1])-1],single.digit[as.numeric(x.1[2])+1]))
+        out<-paste(ty[as.numeric(x.1[1])-1],single.digit[as.numeric(x.1[2])+1])
+
+        output<-c(output, out)
 
       }
 
@@ -191,7 +204,9 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
                    sep="-")
       }
 
-      return(paste(single.digit[as.numeric(x.1[1])+1]," hundred and ",x.2, sep="" ))
+      out<-paste(single.digit[as.numeric(x.1[1])+1]," hundred and ",x.2, sep="" )
+
+      output<-c(output, out)
 
     } else if (dig.len==4) {
 
@@ -199,15 +214,17 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
       if (x.1[2]=="0" & x.1[3]=="0" & x.1[4]=="0") {
 
-        return(paste(single.digit[as.numeric(x.1[1])+1],"thousand"))
+        out<-paste(single.digit[as.numeric(x.1[1])+1],"thousand")
+
+        output<-c(output, out)
 
       } else if (x.1[2]=="0" & x.1[3]=="0" & x.1[4]!="0") {
 
-        return(paste(single.digit[as.numeric(x.1[1])+1],
+        out<-paste(single.digit[as.numeric(x.1[1])+1],
                      "thousand and",
-                     single.digit[as.numeric(x.1[4])+1]
-        )
-        )
+                     single.digit[as.numeric(x.1[4])+1])
+
+        output<-c(output, out)
 
       } else if (x.1[2]!="0" & x.1[3]=="1") {
 
@@ -224,29 +241,32 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
       } else if (x.1[2]=="0" & x.1[3]=="1") {
 
-        return(paste(single.digit[as.numeric(x.1[1])+1],
+        out<-paste(single.digit[as.numeric(x.1[1])+1],
                      "thousand and",
                      teen[as.numeric(x.1[4])+1]
         )
-        )
+
+        output<-c(output, out)
 
       } else if (x.1[2]=="0" & x.1[3]!="0" & x.1[4]=="0") {
 
-        return(paste(single.digit[as.numeric(x.1[1])+1],
+        out<-paste(single.digit[as.numeric(x.1[1])+1],
                      "thousand and",
                      ty[as.numeric(x.1[3])-1]
         )
-        )
+
+        output<-c(output, out)
 
       } else if (x.1[2]=="0" & x.1[3]!="0" & x.1[4]!="0") {
 
-        return(paste(single.digit[as.numeric(x.1[1])+1],
+        out<-paste(single.digit[as.numeric(x.1[1])+1],
                      "thousand and",
                      ty[as.numeric(x.1[3])-1],
                      "-",
                      single.digit[as.numeric(x.1[4])+1]
         )
-        )
+
+        output<-c(output, out)
 
       } else {
 
@@ -257,10 +277,12 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
       x.3<-paste(single.digit[as.numeric(x.1[2])+1]," hundred and ",x.2, sep="" )
 
-      return(paste(single.digit[as.numeric(x.1[1])+1],
+      out<-paste(single.digit[as.numeric(x.1[1])+1],
                    " thousand ",
                    x.3,
-                   sep=""))
+                   sep="")
+
+      output<-c(output, out)
 
     } else if (dig.len==5) {
 
@@ -270,74 +292,84 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
         if (x.1[3]=="0" & x.1[4]=="0" & x.1[5]=="0") {
 
-          return(paste(teen[as.numeric(x.1[2])+1],"thousand"))
+          out<-paste(teen[as.numeric(x.1[2])+1],"thousand")
+
+          output<-c(output, out)
 
         } else if (x.1[3]=="0" & x.1[4]=="0" & x.1[5]!="0") {
 
-          return(paste(teen[as.numeric(x.1[2])+1],
+          out<-paste(teen[as.numeric(x.1[2])+1],
                        "thousand and",
                        single.digit[as.numeric(x.1[5])+1]
           )
-          )
+
+          output<-c(output, out)
 
         } else if (x.1[3]!="0" & x.1[4]=="1") {
 
-          return(paste(teen[as.numeric(x.1[2])+1],
-                       "thousand",
-                       single.digit[as.numeric(x.1[3])+1],
-                       "hundred and",
-                       teen[as.numeric(x.1[5])+1]
+          out<- paste(teen[as.numeric(x.1[2])+1],
+                      "thousand",
+                      single.digit[as.numeric(x.1[3])+1],
+                      "hundred and",
+                      teen[as.numeric(x.1[5])+1]
           )
-          )
+
+          output<-c(output, out)
 
 
         } else if (x.1[3]!="0" & x.1[4]=="0" & x.1[5]!="0") {
 
-          return(paste(teen[as.numeric(x.1[2])+1],
+          out <- paste(teen[as.numeric(x.1[2])+1],
                        "thousand",
                        single.digit[as.numeric(x.1[3])+1],
                        "hundred and",
                        single.digit[as.numeric(x.1[5])+1]
           )
-          )
+
+          output<-c(output, out)
 
         } else if (x.1[3]!="0" & x.1[4]!="0" & x.1[5]=="0") {
 
-          return(paste(teen[as.numeric(x.1[2])+1],
+          out <- paste(teen[as.numeric(x.1[2])+1],
                        "thousand",
                        single.digit[as.numeric(x.1[3])+1],
                        "hundred and",
                        ty[as.numeric(x.1[4])-1]
           )
-          )
+
+          output<-c(output, out)
 
 
         } else if (x.1[3]=="0" & x.1[4]=="1") {
 
-          return(paste(teen[as.numeric(x.1[2])+1],
-                       "thousand and",
-                       teen[as.numeric(x.1[5])+1]
+          out<-paste(teen[as.numeric(x.1[2])+1],
+                    "thousand and",
+                    teen[as.numeric(x.1[5])+1]
           )
-          )
+
+
+          output<-c(output, out)
 
         } else if (x.1[3]=="0" & x.1[4]!="0" & x.1[5]=="0") {
 
-          return(paste(teen[as.numeric(x.1[2])+1],
+          out<-paste(teen[as.numeric(x.1[2])+1],
                        "thousand and",
                        ty[as.numeric(x.1[4])-1]
           )
-          )
+
+          output<-c(output, out)
 
         } else if(x.1[3]=="0" & x.1[4]!="0" & x.1[5]!="0") {
 
-          return(paste(teen[as.numeric(x.1[2])+1],
+          out<-paste(teen[as.numeric(x.1[2])+1],
                        " thousand and ",
                        ty[as.numeric(x.1[4])-1],
                        "-",
                        single.digit[as.numeric(x.1[5])+1],
                        sep=""
           )
-          )
+
+          output<-c(output, out)
 
         } else {
 
@@ -347,10 +379,12 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
           x.3<-paste(single.digit[as.numeric(x.1[3])+1]," hundred and ",x.2, sep="" )
 
-          return(paste(teen[as.numeric(x.1[2])+1],
+          out<-paste(teen[as.numeric(x.1[2])+1],
                        " thousand ",
                        x.3,
-                       sep=""))
+                       sep="")
+
+          output<-c(output, out)
         }
 
 
@@ -358,14 +392,16 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
         if (x.1[4]=="1") {
 
-          return(paste(ty[as.numeric(x.1[1])-1],
+          out <- paste(ty[as.numeric(x.1[1])-1],
                        "-",
                        single.digit[as.numeric(x.1[2])+1],
                        " thousand ",
                        single.digit[as.numeric(x.1[3])+1],
                        " hundred and ",
                        teen[as.numeric(x.1[5])+1],
-                       sep=""))
+                       sep="")
+
+          output<-c(output, out)
 
         } else {
 
@@ -375,12 +411,14 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
           x.3<-paste(single.digit[as.numeric(x.1[3])+1]," hundred and ",x.2, sep="" )
 
-          return(paste(ty[as.numeric(x.1[1])-1],
+          out <- paste(ty[as.numeric(x.1[1])-1],
                        "-",
                        single.digit[as.numeric(x.1[2])+1],
                        " thousand ",
                        x.3,
-                       sep=""))
+                       sep="")
+
+          output<-c(output, out)
         }
 
       } else {
@@ -391,82 +429,89 @@ num.to.speech<- function(x, zero.digit=F, round.digit=3, zero.append=F) {
 
         if (x.1[3]=="0" & x.1[4]=="0" & x.1[5]=="0") {
 
-          return(paste(x.2,"thousand"))
+          out<- paste(x.2,"thousand")
+
+          output<-c(output, out)
 
         } else if (x.1[3]=="0" & x.1[4]=="0" & x.1[5]!="0") {
 
-          return(paste(x.2,
-                       "thousand and",
-                       single.digit[as.numeric(x.1[5])+1]
+          out<-paste(x.2,
+                    "thousand and",
+                    single.digit[as.numeric(x.1[5])+1]
           )
-          )
+
+          output<-c(output, out)
 
         } else if (x.1[3]=="0" & x.1[4]=="1") {
 
-          return(paste(x.2,
+          out <- paste(x.2,
                        "thousand and",
                        teen[as.numeric(x.1[5])+1]
-          ))
+          )
+
+          output<-c(output, out)
 
         } else if (x.1[3]!="0" & x.1[4]=="0" & x.1[5]!="0") {
 
-          return(paste(x.2,
+          out <- paste(x.2,
                        "thousand",
                        single.digit[as.numeric(x.1[3])+1],
                        "hundred and",
                        single.digit[as.numeric(x.1[5])+1]
-          ))
+          )
+
+          output<-c(output, out)
 
         } else if (x.1[3]!="0" & x.1[4]!="0" & x.1[5]=="0") {
 
-          return(paste(x.2,
+          out <- paste(x.2,
                        "thousand",
                        single.digit[as.numeric(x.1[3])+1],
                        "hundred and",
                        ty[as.numeric(x.1[4])-1]
-          ))
+          )
+
+          output<-c(output, out)
 
         } else if (x.1[3]=="0" & x.1[4]!="0" & x.1[5]=="0") {
 
-          return(paste(x.2,
+          out <- paste(x.2,
                        "thousand and",
                        ty[as.numeric(x.1[4])-1]
           )
-          )
+
+          output<-c(output, out)
 
         } else if(x.1[3]=="0" & x.1[4]!="0" & x.1[5]!="0") {
 
-          return(paste(x.2,
+          out <- paste(x.2,
                        " thousand and ",
                        ty[as.numeric(x.1[4])-1],
                        "-",
                        single.digit[as.numeric(x.1[5])+1],
                        sep=""
           )
-          )
+
+          output<-c(output, out)
 
         } else if (x.1[3]!="0" & x.1[4]=="0" & x.1[5]=="0") {
 
-          return(paste(x.2,
+          out <- paste(x.2,
                        "thousand and",
                        single.digit[as.numeric(x.1[3])+1],
                        "hundred"
-          ))
+          )
+
+          output<-c(output, out)
         }
 
       }
 
-
-
     }
 
 
-
-  } else {
-
-    stop("Vector length greater than 1. Using lapply/sapply recommended.")
   }
 
-
+  return(output)
 
 }

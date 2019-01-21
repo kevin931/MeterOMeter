@@ -1,59 +1,58 @@
 \name{num_to_speech}
 \alias{num_to_speech}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
 
-num_to_speech
-%%  ~~function to do ... ~~
+Convert Numbers to English
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+
+This function converts numbers to English in how people actually speak it instead of converting it digit by digit. It currents supports integers between 0 and 99999 and decimals between 0 and 1 with up to ten digits.
+
 }
 \usage{
-num_to_speech(x)
+num_to_speech(number, zero.digit=F, round.digit=3, zero.append=F)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
-\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
+  \item{number}{
+
+  A vector of numbers.
+
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+  \item{zero.digits}{
+  A logical vector indicating whether the zero before the decimal point should be pronunced.
+  }
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+  \item{round.digit}{
 
-## The function is currently defined as
-function (x)
-{
+  A numeric vector indicating how many digits after the decimal point to round.
+  }
+
+  \item{zero.append}{
+A logical vector indicating whether zeroes will be appended if the round.digit is larger than the actual number of digits after the decimal point.
   }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\details{
+
+}
+\value{
+A vector of numbers in English
+}
+\references{
+
+}
+\author{
+Kevin Wang
+}
+\note{
+Since this function attempts to replicate how humans actually say the numbers instead of saying all the digits, it now only supports a limited range of numbers.
+}
+
+\seealso{
+}
+\examples{
+num_to_speech(c(100, 296, 0.1), T, 1, F)
+}
+

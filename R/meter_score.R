@@ -14,8 +14,6 @@ meter_score<-function(x,
                                       "octameter"),
                        secondary_stress=T,
 
-                      word_boundary=F,
-
                       meterometer.com=F
                        )
 {
@@ -183,67 +181,6 @@ meter_score<-function(x,
        pronunciation.1, pronunciation.2, pronunciation.3,
        pronunciation.4)
 
-    if (word_boundary) {
-
-      warning("word_boundary not yet available.
-              Stay tuned for future updates.")
-
-      if (1==0) {
-
-        word.index<-rep(0, nrow(x))
-
-        syl.start.1<-vector()
-
-        syl.end.1<-vector()
-
-        syllables.1<-x$syllables.1
-
-        for (i in 1:nrow(x)) {
-
-          if (i==1) {
-
-            syl.end.1[i]<-syllables.1[i]
-
-            syl.start.1[i]<- 1
-
-          }  else {
-
-            syl.end.1[i]<-sum(syllables.1[i], syl.end.1[i-1])
-
-            syl.start.1[i]<- syl.end.1[i]-syllables.1[i]+1
-
-          }
-
-        }
-
-
-        index.1.syl<-index.1.syl[which(index.1==1)]
-
-        length.syl.start<-length(syl.start.1)
-
-        length.syl.end<-length(syl.end.1)
-
-        for (i in 1:length(index.1.syl)) {
-
-          print(i)
-
-          instance<-unlist(strsplit(index.1.syl[i], split = "_"))
-
-          if (length(setdiff(syl.start.1, instance[1]))<length.syl.start &
-              length(setdiff(syl.end.1, instance[2]))<length.syl.end ) {
-
-            word.index[which(syl.start.1==instance[1]):which(syl.end.1==instance[2])]<-1
-
-          }
-
-        }
-
-      }
-
-
-      }
-
-
     metrical_score<-sum(index)/length(index)
 
     metrical_structure<-index
@@ -293,3 +230,4 @@ meter_score<-function(x,
   return(output)
 
 }
+

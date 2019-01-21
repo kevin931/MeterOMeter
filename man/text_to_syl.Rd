@@ -1,59 +1,71 @@
 \name{text_to_syl}
 \alias{text_to_syl}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 
-text_to_syl
-%%  ~~function to do ... ~~
+Converting Words to Syllables
+
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+
+This function implements the function syl_split by providing support for vector or string input. It also has the option for multi-threading for better performance on a modern CPU.
 }
 \usage{
-text_to_syl(x)
+text_to_syl(x,
+            type=c("vector", "string"),
+            multi_core=F,
+            core_used=NA)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+    A vector or a single string containing one or more words.
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
-\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
+  \item{type}{
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+    "vector" for vector input and "string" input
+  }
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+  \item{multi_core}{
 
-## The function is currently defined as
-function (x)
-{
+  a logical indicating whether to use multiple cores with parallel package
+  }
+
+  \item{core_used}{
+
+  a numeric vector that specifies how many cores to use if "multi_core" is TRUE.
   }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\details{
+
+This function is dependent upon the syl_split function and for better performance, the parallel package is required. In the future, the type argument may no longer be required as it will be handled by the function itself.
+}
+\value{
+A nested list with the syllables of the same word in their own lists
+}
+\references{
+
+}
+\author{
+Kevin Wang
+}
+\note{
+Future support for Windows;
+May merge with syl_split in the future versions.
+}
+
+
+\seealso{
+
+}
+\examples{
+
+require(MeterOMeter)
+
+text_to_syllable(c("I", "am", "a", "developer"), "vector")
+
+text_to_syllable("I am a developer", "string")
+
+text_to_syllable("I am a developer", "string", T, 2)
+
+}
+
