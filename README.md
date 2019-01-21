@@ -10,7 +10,7 @@ The MeterOMeter package provides only limited functions at this time. The meter_
 
 ## Current Version:
 
-0.1.1
+0.1.2
 
 ## What's New?
 
@@ -22,9 +22,7 @@ This project is periodically maintained with new features planned.
 
 ## Known Issues:
 
-1. There currently is no documentation for this package whatsoever, and I will address this issue in the near future.
-
-2. The num_to_speech function covers only a certain range of numbers at this time.
+1. The num_to_speech function covers only a certain range of numbers at this time.
 
 ## Collaboration:
 
