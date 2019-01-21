@@ -7,6 +7,7 @@ Maintainer: Kevin Wang <kevinwang@gmail.com>
 Description: The MeterOMeter Package uses basic NLP tools and statistical
     models for tools in the field of digital humanity, especially poetry.
 Depends: R (>= 3.4.4)
+Imports: tm, parallel
 License: MIT License
 Encoding: UTF-8
 LazyData: true
