@@ -14,7 +14,7 @@ The MeterOMeter package provides only limited functions at this time. The meter_
 
 ## What's New?
 
-Please [click here](https://github.com/kevin931/MeterOMeter/blob/master/Versions.md)
+Please [click here](https://github.com/kevin931/MeterOMeter/blob/stable_dev/Versions.md)
 
 ## Current Status:
 
