@@ -515,5 +515,3 @@ num.to.speech<- function(number, zero.digit=F, round.digit=3, zero.append=F) {
   return(output)
 
 }
-
-num.to.speech(c(10908, 209))
