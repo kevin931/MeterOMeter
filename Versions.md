@@ -5,6 +5,7 @@
 1. Added documentations for all functions in the package.
 2. Added support for vector input in num_to_speech.
 3. Added a sample dataset for demonstration.
+4. Fixed an encoding issue in meter_yaml.
 
 ## 0.1.1
 
