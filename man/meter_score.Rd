@@ -1,57 +1,77 @@
 \name{meter_score}
 \alias{meter_score}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{meter_score
-%%  ~~function to do ... ~~
+
+\title{
+
+  Metrical Density
+
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This function calculates the mertical density of given text in the form of binary stresses. It supports most common meters, but texts have to be pre-processed so that "0" represents an unstressed syllable and "1" represents a stressed syllable.
 }
 \usage{
-meter_score(x)
+function(x,
+        meter_type=c("iambic",
+                     "trochaic",
+                     "spondaic",
+                     "anapestic",
+                     "dactylic",
+                     "pyrrhic"),
+        meter_length=c("dimeter",
+                       "trimeter",
+                       "tetrameter",
+                       "pentameter",
+                       "hexameter",
+                       "heptameter",
+                       "octameter"),
+        secondary_stress=T,
+        meterometer.com=F)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+  A dataframe from the output of meter_yaml or a vector or a string of binary inputs.
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
-\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
+  \item{meter_type}{
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+  A string indicating one of the six type of stress mattern to look for
+  }
+  \item{meter_length}{
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+  A string indicating one of the six supported meter length
+  }
+  \item{secondary_stress}{
 
-## The function is currently defined as
-function (x)
-{
+  A logical vector indicating whether there are encoded "2" for optional stresses.
   }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\details{
+}
+\value{
+  \item{metrical_score}{
+  A single numeric value which is the percentage of matched instances
+  }
+  \item{metrical_structure}{
+  A vector indicating which possible instances have exact matches.
+  }
+}
+\references{
+}
+\author{
+Kevin Wang
+}
+\note{
+This function is in essence a pattern matching algorithm with a targeted audience of literary scholars. Ideally, this function should be combined with a program or algorithm that parses raw text data.
+}
+
+
+\seealso{
+
+}
+\examples{
+meter_score("0101010100010101010101", "iambic", "dimeter", F, F)
+
+meter_score("0101020122010101010101", "iambic", "dimeter", T, F)
+
+}
+

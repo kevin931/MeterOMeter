@@ -1,59 +1,45 @@
 \name{meter_yaml}
 \alias{meter_yaml}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
 
 Contert Meter-O-Meter YAML Output to Data Frames
-%%  ~~function to do ... ~~
+
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This function converts the specific YAML file from www.meter-o-meter.com to data frames. While working with meter-o-meter YAML files, this function lays the ground work for other functions in this package and in R.
 }
 \usage{
-meter_yaml(x)
+meter_yaml(file)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{file}{
+  A local file path for the YAML file.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+  A dataframe with
 }
 \references{
-%% ~put references to the literature/web site here ~
+
 }
 \author{
-%%  ~~who you are~~
+Kevin Wang
 }
 \note{
-%%  ~~further notes~~
+www.meter-o-meter.com is currently not open source. The function has work in conjunction with its outputs that are currently not available to the public. Efforts will be made in conjunction with www.meter-o-meter.com.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-function (x)
-{
-  }
+meter_yaml("./data/moby_dick.yaml")
+
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
