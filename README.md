@@ -6,7 +6,7 @@ Welcome to the Meter-O-Meter Project!!
 
 The Meter-O-Meter project is based on www.meter-o-meter.com and Tim Cassedy's idea of measuring metrical density and identifying metrical verse in prose and poetry. While determining the meter of one single poem may not be hard, finding patterns and statistics on a larger scale is difficult. This project, alongside with all the implementations on www.meter-o-meter.com, is such an attempt that provides a path for researchers to study metrical verse from a computational point of view.
 
-The MeterOMeter package provides only limited functions at this time. The meter_yaml function currently relies on a proprietary meter-o-meter YAML format that is not yet available to the general public, but all other functions serve as stand-alone functions for R.
+The MeterOMeter package provides only limited functions at this time. The meter_yaml function currently relies on a proprietary meter-o-meter YAML format that is not yet available to the general public and may be deprecated in the future, but all other functions serve as stand-alone functions for R.
 
 ## Current Version:
 
