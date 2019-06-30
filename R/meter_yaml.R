@@ -204,49 +204,81 @@ meter_yaml<-function(file) {
 
   rm(i, sub_list, words, pronunciations, scores, sources)
 
-  if (any(pronunciation.1=="0̩")) {
 
-    pronunciation.1[which(pronunciation.1=="0̩")] <-"0"
 
-  }
+  #### Hot fixing an encoding issue
 
-  if (any(pronunciation.1=="1̩")) {
 
-    pronunciation.1[which(pronunciation.1=="1̩")]<-"1"
-  }
+  pronunciation.1 <- strsplit(pronunciation.1, split="")
 
-  if (!is.na(any(pronunciation.2=="0̩"))) {
+  pronunciation.1.fix <- vector()
 
-    pronunciation.2[which(pronunciation.2=="0̩")] <-"0"
+  for (i in 1:length(pronunciation.1)) {
 
-  }
+    word_pro <- pronunciation.1[[i]]
 
-  if (!is.na(any(pronunciation.2=="1̩"))) {
+    num_index <- which(word_pro == "0" | word_pro=="1")
 
-    pronunciation.2[which(pronunciation.2=="1̩")]<-"1"
-  }
+    pronunciation.1.fix[i] <- paste(word_pro[num_index], collapse = "")
 
-  if (!is.na(any(pronunciation.3=="0̩"))) {
-
-    pronunciation.3[which(pronunciation.3=="0̩")] <-"0"
 
   }
 
-  if (!is.na(any(pronunciation.3=="1̩"))) {
+  pronunciation.1 <- pronunciation.1.fix
 
-    pronunciation.3[which(pronunciation.3=="1̩")]<-"1"
+  pronunciation.2 <- strsplit(pronunciation.2, split="")
+
+  pronunciation.2.fix <- vector()
+
+  for (i in 1:length(pronunciation.2)) {
+
+    word_pro <- pronunciation.2[[i]]
+
+    num_index <- which(word_pro == "0" | word_pro=="1")
+
+    pronunciation.2.fix[i] <- paste(word_pro[num_index], collapse = "")
+
+
   }
 
-  if (!is.na(any(pronunciation.4=="0̩"))) {
+  pronunciation.2 <- pronunciation.2.fix
 
-    pronunciation.4[which(pronunciation.4=="0̩")] <-"0"
+  pronunciation.3 <- strsplit(pronunciation.3, split="")
+
+  pronunciation.3.fix <- vector()
+
+  for (i in 1:length(pronunciation.3)) {
+
+    word_pro <- pronunciation.3[[i]]
+
+    num_index <- which(word_pro == "0" | word_pro=="1")
+
+    pronunciation.3.fix[i] <- paste(word_pro[num_index], collapse = "")
+
 
   }
 
-  if (!is.na(any(pronunciation.1=="1̩"))) {
+  pronunciation.3 <- pronunciation.3.fix
 
-    pronunciation.4[which(pronunciation.4=="1̩")]<-"1"
+  pronunciation.4 <- strsplit(pronunciation.4, split="")
+
+  pronunciation.4.fix <- vector()
+
+  for (i in 1:length(pronunciation.4)) {
+
+    word_pro <- pronunciation.4[[i]]
+
+    num_index <- which(word_pro == "0" | word_pro=="1")
+
+    pronunciation.4.fix[i] <- paste(word_pro[num_index], collapse = "")
+
+
   }
+
+  pronunciation.4 <- pronunciation.4.fix
+
+  rm(pronunciation.4.fix, pronunciation.3.fix, pronunciation.2.fix,
+     pronunciation.1.fix, word_pro, nun_index)
 
   syllables.1<-nchar(pronunciation.1)
 
