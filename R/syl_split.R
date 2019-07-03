@@ -59,6 +59,12 @@ syl_split<-function(input) {
 
     } else if (grepl("fulness$", word)) {
 
+      if (word == "fulness") {
+
+        output[[word_num]] <- c("fu", "ne")
+
+      }
+
       word<-unlist(strsplit(word, ""))
 
       word<-word[1:(length(word)-8)]
